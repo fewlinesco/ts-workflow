@@ -54,7 +54,7 @@ import {UnexpectedError} from "workflow"
 import dummyWorkflow, {WrongInput} from "../worflows/dummy-workflow"
 
 export function dummyHandle(req, res) {
-  const payload = makePayload(req.params, {logger: {info: console.log, error: console.error}})
+  const payload = makePayload({myParam: req.params.myParam}, {logger: {info: console.log, error: console.error}})
 
   return dummyWorkflow(payload)
     .then(data => res.status(200).json(data))
