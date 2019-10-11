@@ -6,7 +6,7 @@ A TypeScript implementation of the workflow pattern.
 
 ## Usage
 
-Using workflow provides for free a way to add error handling and logging to your business logic.
+Using workflow provides a framework to add error handling and logging to your business logic.
 
 The workflow module exports:
 
