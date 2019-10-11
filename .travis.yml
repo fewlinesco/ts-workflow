@@ -7,5 +7,6 @@ cache:
     - dist
     - deps
 script:
+  - yarn install
   - yarn build
   - yarn test
