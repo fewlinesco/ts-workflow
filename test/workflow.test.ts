@@ -22,87 +22,43 @@ const handleRun = (payload: Input) => {
 
 const workflow = makeWorkflow("DummyWorkflow", handleRun, [ItShouldBeOne]);
 
-test("it should be true with payload.value === 1", () => {
-  expect.assertions(3);
-  const neverCalled = jest.fn();
+test("it should be true with payload.value === 1", async () => {
+  expect.assertions(2);
+
   const logger = { info: jest.fn(), error: jest.fn() };
   const payload = makePayload({ value: 1 }, { logger: logger });
 
-  return workflow(payload)
-    .catch(() => neverCalled())
-    .then(result => {
-      expect(result).toBe(true);
-      expect(logger.info).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: "Workflow DummyWorkflow successfully passed"
-        })
-      );
-      expect(neverCalled).not.toHaveBeenCalled();
-      return true;
+  await expect(workflow(payload)).resolves.toBe(true);
+
+  expect(logger.info).toHaveBeenCalledWith(
+    expect.objectContaining({
+      message: "Workflow DummyWorkflow successfully passed"
     })
-    .catch(() => expect(false).toBeTruthy())
-    .then(() => {
-      return true;
-    });
+  );
 });
 
-test("it should throw UnexpectedError with a negative value in payload", () => {
-  expect.assertions(3);
-  const neverCalled = jest.fn();
+test("it should throw UnexpectedError with a negative value in payload", async () => {
+  expect.assertions(2);
+
   const logger = { info: jest.fn(), error: jest.fn() };
   const payload = makePayload({ value: -1 }, { logger: logger });
 
-  return workflow(payload)
-    .then(() => {
-      neverCalled();
-      return true;
-    })
-    .catch(e => {
-      expect(e).toBeInstanceOf(UnexpectedError);
-      expect(logger.error).toHaveBeenCalled();
-      return true;
-    })
-    .then(() => {
-      expect(neverCalled).toHaveBeenCalledTimes(0);
-      return true;
-    })
-    .catch(() => expect(false).toBeTruthy())
-    .then(() => {
-      return true;
-    });
+  await expect(workflow(payload)).rejects.toBeInstanceOf(UnexpectedError);
+
+  expect(logger.error).toHaveBeenCalled();
 });
 
-test("it should throw ItShouldBeOne when number is positive but not equal to 1", () => {
-  expect.assertions(3);
+test("it should throw ItShouldBeOne when number is positive but not equal to 1", async () => {
+  expect.assertions(2);
 
-  const neverCalled = jest.fn();
   const logger = { info: jest.fn(), error: jest.fn() };
   const payload = makePayload({ value: 2 }, { logger: logger });
 
-  return workflow(payload)
-    .then(() => {
-      neverCalled();
-      return true;
+  await expect(workflow(payload)).rejects.toBeInstanceOf(ItShouldBeOne);
+  expect(logger.info).toHaveBeenCalledWith(
+    expect.objectContaining({
+      message:
+        'Workflow DummyWorkflow failed with:\n\t"Input value should be 1"'
     })
-    .catch(e => {
-      expect(e).toBeInstanceOf(ItShouldBeOne);
-      expect(logger.info).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message:
-            'Workflow DummyWorkflow failed with:\n\t"Input value should be 1"'
-        })
-      );
-      return true;
-    })
-    .then(() => {
-      expect(neverCalled).not.toHaveBeenCalled();
-      return true;
-    })
-    .catch(e => {
-      expect(false).toBeTruthy();
-      return true;
-    })
-    .then(() => {
-      return true;
-    });
+  );
 });
