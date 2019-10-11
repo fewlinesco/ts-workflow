@@ -23,6 +23,8 @@ The workflow module exports:
   - `handleRun: (input: Input, adapters?: object) => Promise<Result>` your actual business logic functions. the input that will be passed is the input contained in the payload. the adapters are the adapters contained in the payload's meta.
   - `acceptableErrors` an Array of error classes that are accepted to be thrown by the workflow.
 
+### Exemple of a workflow declaration
+
 ```javascript
 // src/workflows/dummy-workflow.ts
 import makeWorkflow from "workflow"
@@ -44,7 +46,7 @@ const acceptableErrors = [WrongInput]
 export default makeWorkflow("dummyWorkflow", handleRun, acceptableErrors)
 ```
 
-Exemple of usage of a workflow in an express handler
+### Exemple of usage in an express handler
 
 ```javascript
 // src/handlers/some-module.ts
