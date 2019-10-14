@@ -10,7 +10,7 @@
     "typescript"
   ],
   "license": "MIT",
-  "name": "ts-workflow",
+  "name": "@fewlines/ts-workflow",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fewlinesco/ts-workflow.git"
