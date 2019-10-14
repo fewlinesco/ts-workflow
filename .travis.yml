@@ -1,0 +1,11 @@
+language: node
+node:
+  - 10.16.3
+cache:
+  directories:
+    - dist
+    - deps
+script:
+  - yarn install
+  - yarn build
+  - yarn test
