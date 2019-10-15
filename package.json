@@ -11,6 +11,8 @@
   ],
   "license": "MIT",
   "name": "@fewlines/ts-workflow",
+  "main": "dist/index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fewlinesco/ts-workflow.git"
