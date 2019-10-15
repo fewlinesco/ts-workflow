@@ -1,4 +1,4 @@
-import makeWorkflow, { UnexpectedError, makePayload } from "../src/workflow";
+import { UnexpectedError, makePayload, makeWorkflow } from "../src/workflow";
 
 class NegativeNumbersAreForbidden extends Error {}
 

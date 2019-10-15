@@ -71,7 +71,7 @@ export function makePayload<Input>(input: Input, meta: Meta) {
   };
 }
 
-export default function makeWorkflow<Input, Result>(
+export function makeWorkflow<Input, Result>(
   workflowName: string,
   handleRun: (payload: Input, adapters?: object) => Promise<Result>,
   acceptableErrors: Array<Function>
